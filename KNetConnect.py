@@ -11,6 +11,7 @@ import urllib2
 import webbrowser
 import paramiko
 import threading
+import time
 import objc, re, os
 from Foundation import *
 from AppKit import *
@@ -28,7 +29,8 @@ PASSWORD = getKey(preferences.defaults, u'password')
 
 STATUS_IMAGES = {
     'idle': 'images/idle.png',
-    'active': 'images/active.png'
+    'active': 'images/active.png',
+    'pause': 'images/pause.png'
 }
 START_TIME = NSDate.date()
 CONNECTION_TEST_SITES = [
@@ -75,6 +77,7 @@ class Timer(NSObject):
     statusbar = None
     menuitems = {}
     checkForConnection = True
+    lastCheck = time.time()
     ssh = None
     state = 'idle'
     
@@ -156,6 +159,7 @@ class Timer(NSObject):
         else:
             self.menuitems['connection'].setTitle_('No Internet')
             self.setState('idle')
+        lastCheck = time.time()
     
     def tick_(self, notification):
         """This gets executed on a regular interval."""
@@ -165,13 +169,17 @@ class Timer(NSObject):
     
     def pause_(self, notification):
         """Stop/Start checking if we are connected."""
+        if DEBUG: print "pausing..."
         if self.checkForConnection:
             self.checkForConnection = False
             self.menuitems['pause'].setTitle_('Resume Connecting')
-            self.setState('idle')
+            self.setState('pause')
             self.closeConnection()
         else:
             self.checkForConnection = True
+            if time.time() - lastCheck < 7:
+                self.checkConnection()
+            self.setState('idle')
             self.menuitems['connection'].setTitle_('Connecting...')
             self.menuitems['pause'].setTitle_('Stop Connecting')
     

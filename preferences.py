@@ -13,7 +13,6 @@ NSUserDefaultsController.sharedUserDefaultsController().setInitialValues_(dictio
 
 defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
 
-
 class Preferences(threading.Thread):
     
     def __init__(self):
