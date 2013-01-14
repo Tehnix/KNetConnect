@@ -33,3 +33,11 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# OS specific
+.DS_Store
+
+# Project related files
+settings.conf
+dist/*
+build/*
