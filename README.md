@@ -18,4 +18,4 @@ After that, you should be set.
 
 ![alt text](http://i.imgur.com/0qyoX.png "The KNet Connect icon in the system tray")
 
-![alt text](http://i.imgur.com/cibXw.png "The KNet Connect icon in the system tray")
+![alt text](http://i.imgur.com/P8w4x.png "The KNet Connect icon in the system tray with the menu open")
